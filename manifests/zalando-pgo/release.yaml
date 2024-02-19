@@ -1,0 +1,117 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: postgres-operator-charts
+  namespace: zalando-pgo
+spec:
+  interval: 60m
+  url: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: postgres-operator
+  namespace: zalando-pgo
+spec:
+  releaseName: postgres-operator
+  chart:
+    spec:
+      chart: postgres-operator
+      version: "1.10.1"
+      sourceRef:
+        kind: HelmRepository
+        name:  postgres-operator-charts
+        namespace: zalando-pgo
+  interval: 60m
+  values:
+    configKubernetes:
+      # allow user secrets in other namespaces than the Postgres cluster
+      enable_cross_namespace_secret: true
+
+    image:
+      registry: gcr.io/analog-stage-198105
+      repository: devops-services/acid/postgres-operator
+      tag: v1.10.1
+      pullPolicy: "IfNotPresent"
+
+    #image:
+    #  registry: registry.opensource.zalan.do
+    #  repository: acid/postgres-operator
+    #  tag: v1.10.1
+    #  pullPolicy: "IfNotPresent"
+
+    # Optionally specify an array of imagePullSecrets.
+    # Secrets must be manually created in the namespace.
+    # ref: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
+    imagePullSecrets:
+      - name: gcr-regcred
+
+    # general configuration parameters
+    configGeneral:
+      # Spilo docker image
+      docker_image: gcr.io/analog-stage-198105/devops-services/zalando/spilo-15:3.0-p1
+      # docker_image: ghcr.io/zalando/spilo-15:3.0-p1
+
+    configPostgresPodResources:
+      # CPU limits for the postgres containers
+      default_cpu_limit: "1"
+      # CPU request value for the postgres containers
+      default_cpu_request: 100m
+      # memory limits for the postgres containers
+      default_memory_limit: 500Mi
+      # memory request value for the postgres containers
+      default_memory_request: 100Mi
+      # optional upper boundary for CPU request
+      # max_cpu_request: "1"
+
+      # optional upper boundary for memory request
+      # max_memory_request: 4Gi
+
+      # hard CPU minimum required to properly run a Postgres cluster
+      min_cpu_limit: 250m
+      # hard memory minimum required to properly run a Postgres cluster
+      min_memory_limit: 250Mi
+
+
+    # configure interaction with non-Kubernetes objects from AWS or GCP
+    configAwsOrGcp:
+      # Additional Secret (aws or gcp credentials) to mount in the pod
+      additional_secret_mount: "gcp-zalando-sa"
+
+      # Path to mount the above Secret in the filesystem of the container(s)
+      additional_secret_mount_path: "/var/secrets/google"
+
+      # GCP credentials that will be used by the operator / pods
+      gcp_credentials: "/var/secrets/google/key.json"
+
+      # GCS bucket to use for shipping WAL segments with WAL-E
+      wal_gs_bucket: "luxor-zalando-pgo"
+
+    # configure K8s cron job managed by the operator
+    configLogicalBackup:
+      # image for pods of the logical backup job (example runs pg_dumpall)
+      logical_backup_docker_image: "gcr.io/analog-stage-198105/devops-services/acid/logical-backup:v1.10.1"
+      # logical_backup_docker_image: "registry.opensource.zalan.do/acid/logical-backup:v1.10.1"
+
+      # path of google cloud service account json file
+      logical_backup_google_application_credentials: "/var/secrets/google/key.json"
+
+      # prefix for the backup job name
+      logical_backup_job_prefix: "logical-backup-"
+      # storage provider - either "s3", "gcs" or "az"
+      logical_backup_provider: "gcs"
+      # S3 bucket to store backup results
+      logical_backup_s3_bucket: "luxor-zalando-pgo"
+      logical_backup_s3_sse: "AES256"
+      # S3 retention time for stored backups for example "2 week" or "7 days"
+      logical_backup_s3_retention_time: "7 days"
+      # backup schedule in the cron format
+      logical_backup_schedule: "0 17 * * *"
+
+    resources:
+      limits:
+        cpu: 500m
+        memory: 500Mi
+      requests:
+        cpu: 100m
+        memory: 250Mi
