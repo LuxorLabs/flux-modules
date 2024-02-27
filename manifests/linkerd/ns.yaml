@@ -11,3 +11,10 @@ metadata:
   labels:
     linkerd.io/extension: viz
     pod-security.kubernetes.io/enforce: privileged
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: linkerd-smi
+  labels:
+    linkerd.io/extension: smi
