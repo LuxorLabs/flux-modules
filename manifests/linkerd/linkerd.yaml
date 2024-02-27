@@ -69,4 +69,4 @@ spec:
         namespace: linkerd
   interval: 60m
   dependsOn:
-    - name: linkerd-control-plane
+    - name: linkerd/linkerd-control-plane
