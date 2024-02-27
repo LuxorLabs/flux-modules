@@ -3,3 +3,5 @@ kind: Kustomization
 resources:
   - ../manifests/zalando-pgo
   - ../manifests/ingress-nginx-helm-repo # this only installs the helm repo, to allow multipe installation of ingress-nginx
+  - ../manifests/ingress-nginx-ns # default ingress namespace
+  - ../manifests/ingress-nginx # default ingress controller
