@@ -3,3 +3,11 @@ kind: Namespace
 metadata:
   name: linkerd
 spec: {}
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: linkerd-viz
+  labels:
+    linkerd.io/extension: viz
+    pod-security.kubernetes.io/enforce: privileged
