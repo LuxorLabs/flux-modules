@@ -14,18 +14,18 @@ spec:
         name: grafana
         namespace: flux-system
   interval: 60m
-  values:
-    #podAnnotations:
-    #  linkerd.io/inject: enabled
-    # this needs to be overwritten
-    config:
-      clients:
-        - url: http://change-me/loki/api/v1/push
-          tenant_id: 1
-          external_labels:
-            cluster: guardian
-          basic_auth:
-            # The username to use for basic auth
-              username: "change-me"
-              password: "change-me"
-
+#  values:
+#    podAnnotations:
+#      linkerd.io/inject: enabled
+#    # this needs to be overwritten
+#    config:
+#      clients:
+#        - url: http://change-me/loki/api/v1/push
+#          tenant_id: 1
+#          external_labels:
+#            cluster: guardian
+#          basic_auth:
+#            # The username to use for basic auth
+#              username: "change-me"
+#              password: "change-me"
+#
