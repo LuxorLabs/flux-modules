@@ -6,3 +6,4 @@ resources:
   - ../manifests/ingress-nginx-ns # default ingress namespace
   - ../manifests/ingress-nginx # default ingress controller
   - ../manifests/grafana-helm-repo
+  - ../manifests/promtail
