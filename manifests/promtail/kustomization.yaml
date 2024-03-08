@@ -3,4 +3,4 @@ kind: Kustomization
 namespace: promtail
 resources:
     - ns.yaml
-    - source.yaml
+    - release.yaml
