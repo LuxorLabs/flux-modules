@@ -15,10 +15,10 @@ spec:
         namespace: flux-system
   interval: 60m
   values:
+    #podAnnotations:
+    #  linkerd.io/inject: enabled
     # this needs to be overwritten
     config:
-      #podAnnotations:
-      #  linkerd.io/inject: enabled
       clients:
         - url: http://change-me/loki/api/v1/push
           tenant_id: 1
