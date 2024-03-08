@@ -25,7 +25,7 @@ spec:
       matchLabels:
         agent: grafana-agent-logs
     instanceNamespaceSelector: {}
-    logsExternalLabelName: change-me
+    logsExternalLabelName: cluster
 
 ---
 
