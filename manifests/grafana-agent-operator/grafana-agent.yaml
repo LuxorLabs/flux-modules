@@ -19,11 +19,13 @@ spec:
         agent: grafana-agent-metrics
     externalLabels:
       cluster: change-me
-
+    instanceNamespaceSelector: {}
   logs:
     instanceSelector:
       matchLabels:
         agent: grafana-agent-logs
+    instanceNamespaceSelector: {}
+    logsExternalLabelName: change-me
 
 ---
 
