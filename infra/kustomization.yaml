@@ -8,3 +8,4 @@ resources:
   - ../manifests/grafana-helm-repo
   - ../manifests/promtail
   - ../manifests/grafana-agent-operator
+  - ../manifests/kube-state-metrics
