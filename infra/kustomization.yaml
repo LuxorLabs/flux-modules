@@ -11,3 +11,4 @@ resources:
   - ../manifests/prometheus-community-helm-repo
   - ../manifests/kube-state-metrics
   - ../manifests/node-exporter
+  - ../manifests/victoriametrics
