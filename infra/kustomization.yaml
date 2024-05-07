@@ -12,3 +12,5 @@ resources:
   - ../manifests/kube-state-metrics
   - ../manifests/node-exporter
   - ../manifests/victoriametrics
+  - ../manifests/traefik-helm-repo
+  - ../manifests/traefik
