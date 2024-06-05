@@ -14,3 +14,4 @@ resources:
   - ../manifests/victoriametrics
   - ../manifests/traefik-helm-repo
   - ../manifests/traefik
+  - ../manifests/bitnami-helm-repo
