@@ -17,3 +17,14 @@ spec:
   url: oci://registry-1.docker.io/bitnamicharts/redis
   ref:
     semver: "20.8.0"
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: oci-bitnami
+  namespace: flux-system
+spec:
+  interval: 60m0s
+  type: oci
+  url: oci://registry-1.docker.io/bitnamicharts
+
