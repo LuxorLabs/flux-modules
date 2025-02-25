@@ -6,3 +6,14 @@ metadata:
 spec:
   interval: 60m
   url: https://charts.bitnami.com/bitnami
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: oci-redis
+  namespace: flux-system
+spec:
+  interval: 10m
+  url: oci://registry-1.docker.io/bitnamicharts/redis
+  ref:
+    semver: ">=20.8.0"
