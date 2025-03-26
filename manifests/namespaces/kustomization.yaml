@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - monitoring.yaml
   - traefik-v3.yaml
+  - linkerd.yaml
