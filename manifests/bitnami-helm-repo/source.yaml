@@ -27,14 +27,3 @@ spec:
   interval: 60m0s
   type: oci
   url: oci://registry-1.docker.io/bitnamicharts
----
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: OCIRepository
-metadata:
-  name: oci-redis-cluster
-  namespace: flux-system
-spec:
-  interval: 60m
-  url: oci://registry-1.docker.io/bitnamicharts/redis-cluster
-  ref:
-    semver: "12.0.10"
